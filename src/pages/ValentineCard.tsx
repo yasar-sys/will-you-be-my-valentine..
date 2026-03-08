@@ -5,6 +5,7 @@ import teddyImg from "@/assets/teddy.png";
 import FloatingHearts from "@/components/FloatingHearts";
 import Footer from "@/components/Footer";
 import MusicPlayer from "@/components/MusicPlayer";
+import EnvelopeAnimation from "@/components/EnvelopeAnimation";
 import { Heart, Loader2, Mail } from "lucide-react";
 import { fireConfetti, playSuccessSound } from "@/lib/confetti";
 import { getThemeClass } from "@/lib/themes";
@@ -70,7 +71,7 @@ const ValentineCard = () => {
   const [noMsg, setNoMsg] = useState("");
   const [noBtnStyle, setNoBtnStyle] = useState<React.CSSProperties>({});
   const [showLetter, setShowLetter] = useState(false);
-
+  const [envelopeOpened, setEnvelopeOpened] = useState(false);
   const yesScale = 1 + noCount * 0.18;
   const themeClass = card ? getThemeClass(card.theme) : "";
 
@@ -185,6 +186,24 @@ const ValentineCard = () => {
             <a href="/" className="text-sm text-primary hover:underline font-semibold">
               Create your own Valentine card →
             </a>
+          </div>
+          <Footer />
+        </div>
+      </div>
+    );
+  }
+
+  if (!envelopeOpened) {
+    return (
+      <div className={`${themeClass}`}>
+        <div className="valentine-bg flex items-center justify-center min-h-screen p-4 relative overflow-hidden">
+          <FloatingHearts count={8} />
+          <MusicPlayer />
+          <div className="glass-card rounded-3xl p-8 md:p-10 max-w-sm w-full text-center z-10 relative">
+            <EnvelopeAnimation
+              senderName={card?.sender_name || ""}
+              onOpen={() => setEnvelopeOpened(true)}
+            />
           </div>
           <Footer />
         </div>
