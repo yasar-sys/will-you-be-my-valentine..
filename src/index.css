@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Dancing+Script:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -57,19 +57,87 @@
   .font-script {
     font-family: 'Dancing Script', cursive;
   }
-  .valentine-bg {
-    background: linear-gradient(
-      135deg,
-      hsl(var(--pink-light)) 0%,
-      hsl(var(--lavender)) 50%,
-      hsl(var(--pink-light)) 100%
-    );
+  .font-elegant {
+    font-family: 'Playfair Display', serif;
+  }
+
+  /* ===== Theme: Classic Pink ===== */
+  .valentine-bg,
+  .theme-classic .valentine-bg {
+    background: linear-gradient(135deg, hsl(var(--pink-light)) 0%, hsl(var(--lavender)) 50%, hsl(var(--pink-light)) 100%);
     min-height: 100vh;
   }
+
+  /* ===== Theme: Dark Romance ===== */
+  .theme-dark .valentine-bg {
+    background: linear-gradient(135deg, hsl(0 0% 8%) 0%, hsl(340 40% 12%) 50%, hsl(280 30% 10%) 100%);
+  }
+  .theme-dark .glass-card {
+    background: hsl(340 20% 12% / 0.8);
+    border: 1px solid hsl(340 40% 25% / 0.3);
+  }
+  .theme-dark .glass-card,
+  .theme-dark .text-foreground { color: hsl(340 30% 90%); }
+  .theme-dark .text-muted-foreground { color: hsl(340 20% 60%); }
+  .theme-dark .btn-primary-valentine {
+    background: linear-gradient(135deg, hsl(340 80% 45%), hsl(350 90% 55%));
+  }
+  .theme-dark .btn-muted-valentine {
+    background: hsl(340 20% 20%);
+    color: hsl(340 20% 60%);
+  }
+  .theme-dark input {
+    background: hsl(340 20% 15% / 0.5) !important;
+    border-color: hsl(340 30% 25%) !important;
+    color: hsl(340 30% 90%) !important;
+  }
+
+  /* ===== Theme: Neon Love ===== */
+  .theme-neon .valentine-bg {
+    background: linear-gradient(135deg, hsl(280 60% 8%) 0%, hsl(320 50% 10%) 50%, hsl(260 60% 8%) 100%);
+  }
+  .theme-neon .glass-card {
+    background: hsl(280 30% 10% / 0.7);
+    border: 1px solid hsl(320 100% 60% / 0.3);
+    box-shadow: 0 0 40px hsl(320 100% 60% / 0.15), 0 0 80px hsl(280 100% 60% / 0.1);
+  }
+  .theme-neon .glass-card,
+  .theme-neon .text-foreground { color: hsl(320 100% 90%); }
+  .theme-neon .text-muted-foreground { color: hsl(280 60% 70%); }
+  .theme-neon .btn-primary-valentine {
+    background: linear-gradient(135deg, hsl(320 100% 55%), hsl(280 100% 60%));
+    box-shadow: 0 0 20px hsl(320 100% 55% / 0.5);
+  }
+  .theme-neon .btn-muted-valentine {
+    background: hsl(280 30% 18%);
+    color: hsl(280 60% 70%);
+    border: 1px solid hsl(280 60% 40% / 0.3);
+  }
+  .theme-neon input {
+    background: hsl(280 30% 12% / 0.5) !important;
+    border-color: hsl(320 60% 40%) !important;
+    color: hsl(320 100% 90%) !important;
+  }
+
+  /* ===== Theme: Vintage Rose ===== */
+  .theme-vintage .valentine-bg {
+    background: linear-gradient(135deg, hsl(30 40% 90%) 0%, hsl(350 30% 88%) 50%, hsl(20 50% 92%) 100%);
+  }
+  .theme-vintage .glass-card {
+    background: hsl(30 30% 96% / 0.85);
+    border: 1px solid hsl(30 30% 80% / 0.5);
+  }
+  .theme-vintage .btn-primary-valentine {
+    background: hsl(350 50% 55%);
+  }
+  .theme-vintage .btn-muted-valentine {
+    background: hsl(30 20% 88%);
+    color: hsl(30 20% 45%);
+  }
+
   .card-valentine {
     background: linear-gradient(180deg, hsl(var(--card)) 0%, hsl(var(--pink-light)) 100%);
-    box-shadow: 0 25px 60px -15px hsl(var(--primary) / 0.25),
-                0 0 0 1px hsl(var(--border) / 0.5);
+    box-shadow: 0 25px 60px -15px hsl(var(--primary) / 0.25), 0 0 0 1px hsl(var(--border) / 0.5);
   }
   .btn-primary-valentine {
     @apply bg-primary text-primary-foreground font-bold rounded-2xl transition-all duration-200;
@@ -78,6 +146,7 @@
   .btn-primary-valentine:hover {
     filter: brightness(1.1);
     box-shadow: 0 12px 35px -5px hsl(var(--primary) / 0.5);
+    transform: translateY(-1px);
   }
   .btn-primary-valentine:active {
     transform: scale(0.95);
@@ -88,26 +157,28 @@
   .glass-card {
     background: hsl(var(--card) / 0.7);
     backdrop-filter: blur(20px);
-    box-shadow: 0 25px 60px -15px hsl(var(--primary) / 0.2),
-                0 0 0 1px hsl(var(--border) / 0.3);
+    box-shadow: 0 25px 60px -15px hsl(var(--primary) / 0.2), 0 0 0 1px hsl(var(--border) / 0.3);
   }
 }
 
+/* Animations */
 @keyframes float-heart {
   0% { transform: translateY(100vh) scale(0) rotate(0deg); opacity: 0; }
   10% { opacity: 0.8; }
-  90% { opacity: 0.6; }
+  50% { transform: translateY(50vh) scale(0.8) rotate(20deg); opacity: 0.7; }
+  90% { opacity: 0.5; }
   100% { transform: translateY(-10vh) scale(1) rotate(45deg); opacity: 0; }
 }
 
 @keyframes pulse-heart {
   0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.25); }
+  50% { transform: scale(1.3); }
 }
 
 @keyframes bounce-gentle {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-10px) rotate(-2deg); }
+  75% { transform: translateY(-5px) rotate(2deg); }
 }
 
 @keyframes shimmer {
@@ -115,19 +186,41 @@
   100% { background-position: 200% center; }
 }
 
-.animate-float-heart {
-  animation: float-heart linear forwards;
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px hsl(340 75% 60% / 0.3); }
+  50% { box-shadow: 0 0 40px hsl(340 75% 60% / 0.6), 0 0 80px hsl(340 75% 60% / 0.2); }
 }
 
-.animate-pulse-heart {
-  animation: pulse-heart 0.8s ease-in-out infinite;
+@keyframes slide-up {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
-.animate-bounce-gentle {
-  animation: bounce-gentle 2s ease-in-out infinite;
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
 }
 
-.animate-shimmer {
-  background-size: 200% auto;
-  animation: shimmer 3s linear infinite;
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1) rotate(180deg); }
 }
+
+@keyframes envelope-open {
+  0% { transform: rotateX(0deg); }
+  100% { transform: rotateX(-180deg); }
+}
+
+.animate-float-heart { animation: float-heart linear forwards; }
+.animate-pulse-heart { animation: pulse-heart 0.8s ease-in-out infinite; }
+.animate-bounce-gentle { animation: bounce-gentle 3s ease-in-out infinite; }
+.animate-shimmer { background-size: 200% auto; animation: shimmer 3s linear infinite; }
+.animate-glow-pulse { animation: glow-pulse 2s ease-in-out infinite; }
+.animate-slide-up { animation: slide-up 0.6s ease-out forwards; }
+.animate-sparkle { animation: sparkle 1.5s ease-in-out infinite; }
+
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
