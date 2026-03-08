@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Dancing+Script:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,31 +6,31 @@
 
 @layer base {
   :root {
-    --background: 340 80% 92%;
-    --foreground: 340 30% 20%;
-    --card: 0 0% 100%;
-    --card-foreground: 340 30% 20%;
+    --background: 340 80% 95%;
+    --foreground: 340 40% 15%;
+    --card: 340 40% 99%;
+    --card-foreground: 340 40% 15%;
     --popover: 0 0% 100%;
-    --popover-foreground: 340 30% 20%;
-    --primary: 340 82% 65%;
+    --popover-foreground: 340 40% 15%;
+    --primary: 340 75% 60%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 340 30% 90%;
-    --secondary-foreground: 340 30% 30%;
-    --muted: 340 20% 92%;
-    --muted-foreground: 340 15% 50%;
-    --accent: 350 90% 70%;
+    --secondary: 340 40% 92%;
+    --secondary-foreground: 340 40% 25%;
+    --muted: 340 25% 90%;
+    --muted-foreground: 340 15% 45%;
+    --accent: 350 85% 65%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    --border: 340 30% 85%;
-    --input: 340 30% 85%;
-    --ring: 340 82% 65%;
+    --border: 340 30% 88%;
+    --input: 340 30% 88%;
+    --ring: 340 75% 60%;
     --radius: 1rem;
 
-    --gradient-bg: linear-gradient(135deg, hsl(340, 80%, 90%), hsl(320, 70%, 88%), hsl(280, 50%, 92%));
-    --gradient-card: linear-gradient(180deg, hsl(0, 0%, 100%), hsl(340, 60%, 97%));
-    --shadow-card: 0 20px 60px -15px hsl(340 80% 65% / 0.25);
-    --shadow-btn: 0 8px 25px -5px hsl(340 82% 65% / 0.4);
+    --pink-light: 340 80% 92%;
+    --pink-medium: 340 75% 75%;
+    --rose: 350 90% 62%;
+    --lavender: 280 60% 88%;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -54,34 +54,65 @@
 }
 
 @layer utilities {
+  .font-script {
+    font-family: 'Dancing Script', cursive;
+  }
   .valentine-bg {
-    background: var(--gradient-bg);
+    background: linear-gradient(
+      135deg,
+      hsl(var(--pink-light)) 0%,
+      hsl(var(--lavender)) 50%,
+      hsl(var(--pink-light)) 100%
+    );
     min-height: 100vh;
   }
   .card-valentine {
-    background: var(--gradient-card);
-    box-shadow: var(--shadow-card);
+    background: linear-gradient(180deg, hsl(var(--card)) 0%, hsl(var(--pink-light)) 100%);
+    box-shadow: 0 25px 60px -15px hsl(var(--primary) / 0.25),
+                0 0 0 1px hsl(var(--border) / 0.5);
   }
-  .btn-shadow {
-    box-shadow: var(--shadow-btn);
+  .btn-primary-valentine {
+    @apply bg-primary text-primary-foreground font-bold rounded-2xl transition-all duration-200;
+    box-shadow: 0 8px 25px -5px hsl(var(--primary) / 0.4);
+  }
+  .btn-primary-valentine:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 12px 35px -5px hsl(var(--primary) / 0.5);
+  }
+  .btn-primary-valentine:active {
+    transform: scale(0.95);
+  }
+  .btn-muted-valentine {
+    @apply bg-muted text-muted-foreground font-bold rounded-2xl transition-all duration-200;
+  }
+  .glass-card {
+    background: hsl(var(--card) / 0.7);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 25px 60px -15px hsl(var(--primary) / 0.2),
+                0 0 0 1px hsl(var(--border) / 0.3);
   }
 }
 
 @keyframes float-heart {
-  0% { transform: translateY(100vh) scale(0); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+  0% { transform: translateY(100vh) scale(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.6; }
+  100% { transform: translateY(-10vh) scale(1) rotate(45deg); opacity: 0; }
 }
 
 @keyframes pulse-heart {
   0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.2); }
+  50% { transform: scale(1.25); }
 }
 
-@keyframes confetti-fall {
-  0% { transform: translateY(-100%) rotate(0deg); opacity: 1; }
-  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+@keyframes bounce-gentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
 }
 
 .animate-float-heart {
@@ -90,4 +121,13 @@
 
 .animate-pulse-heart {
   animation: pulse-heart 0.8s ease-in-out infinite;
+}
+
+.animate-bounce-gentle {
+  animation: bounce-gentle 2s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background-size: 200% auto;
+  animation: shimmer 3s linear infinite;
 }
