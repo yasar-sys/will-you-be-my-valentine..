@@ -193,6 +193,24 @@ const ValentineCard = () => {
     );
   }
 
+  if (!envelopeOpened) {
+    return (
+      <div className={`${themeClass}`}>
+        <div className="valentine-bg flex items-center justify-center min-h-screen p-4 relative overflow-hidden">
+          <FloatingHearts count={8} />
+          <MusicPlayer />
+          <div className="glass-card rounded-3xl p-8 md:p-10 max-w-sm w-full text-center z-10 relative">
+            <EnvelopeAnimation
+              senderName={card?.sender_name || ""}
+              onOpen={() => setEnvelopeOpened(true)}
+            />
+          </div>
+          <Footer />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={`${themeClass}`}>
       <div className="valentine-bg flex items-center justify-center min-h-screen p-4 relative overflow-hidden">
