@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import teddyImg from "@/assets/teddy.png";
 import FloatingHearts from "@/components/FloatingHearts";
 import Footer from "@/components/Footer";
+import MusicPlayer from "@/components/MusicPlayer";
 import CountdownTimer from "@/components/CountdownTimer";
 import ThemeSelector from "@/components/ThemeSelector";
 import { Heart, Sparkles, Send } from "lucide-react";
@@ -48,6 +49,7 @@ const Index = () => {
   return (
     <div className="valentine-bg flex flex-col items-center justify-center min-h-screen p-4 relative overflow-hidden">
       <FloatingHearts />
+      <MusicPlayer />
 
       <div className="glass-card rounded-3xl p-8 md:p-10 max-w-lg w-full text-center z-10 relative">
         {/* Teddy */}
