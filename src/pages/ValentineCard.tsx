@@ -71,7 +71,7 @@ const ValentineCard = () => {
   const [noMsg, setNoMsg] = useState("");
   const [noBtnStyle, setNoBtnStyle] = useState<React.CSSProperties>({});
   const [showLetter, setShowLetter] = useState(false);
-
+  const [envelopeOpened, setEnvelopeOpened] = useState(false);
   const yesScale = 1 + noCount * 0.18;
   const themeClass = card ? getThemeClass(card.theme) : "";
 
