@@ -173,6 +173,10 @@ const Index = () => {
             </button>
           </>
         )}
+
+        <a href="/track" className="inline-block mt-4 text-xs text-muted-foreground hover:text-primary transition-colors">
+          📊 Track a card response
+        </a>
       </div>
 
       <Footer />
