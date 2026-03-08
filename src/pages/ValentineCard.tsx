@@ -196,6 +196,7 @@ const ValentineCard = () => {
     <div className={`${themeClass}`}>
       <div className="valentine-bg flex items-center justify-center min-h-screen p-4 relative overflow-hidden">
         <FloatingHearts />
+        <MusicPlayer />
 
         {/* Funny NO message toast */}
         {noMsg && (

@@ -49,6 +49,7 @@ const Index = () => {
   return (
     <div className="valentine-bg flex flex-col items-center justify-center min-h-screen p-4 relative overflow-hidden">
       <FloatingHearts />
+      <MusicPlayer />
 
       <div className="glass-card rounded-3xl p-8 md:p-10 max-w-lg w-full text-center z-10 relative">
         {/* Teddy */}
