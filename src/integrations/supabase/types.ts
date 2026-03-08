@@ -18,29 +18,35 @@ export type Database = {
         Row: {
           created_at: string
           id: string
+          message: string | null
           recipient_name: string
           responded: boolean | null
           response: string | null
           sender_name: string
           slug: string
+          theme: string
         }
         Insert: {
           created_at?: string
           id?: string
+          message?: string | null
           recipient_name: string
           responded?: boolean | null
           response?: string | null
           sender_name: string
           slug?: string
+          theme?: string
         }
         Update: {
           created_at?: string
           id?: string
+          message?: string | null
           recipient_name?: string
           responded?: boolean | null
           response?: string | null
           sender_name?: string
           slug?: string
+          theme?: string
         }
         Relationships: []
       }
