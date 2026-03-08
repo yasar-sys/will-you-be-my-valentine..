@@ -4,11 +4,16 @@ import { supabase } from "@/integrations/supabase/client";
 import teddyImg from "@/assets/teddy.png";
 import FloatingHearts from "@/components/FloatingHearts";
 import Footer from "@/components/Footer";
+import CountdownTimer from "@/components/CountdownTimer";
+import ThemeSelector from "@/components/ThemeSelector";
 import { Heart, Sparkles, Send } from "lucide-react";
+import type { CardTheme } from "@/lib/themes";
 
 const Index = () => {
   const [senderName, setSenderName] = useState("");
   const [recipientName, setRecipientName] = useState("");
+  const [message, setMessage] = useState("");
+  const [theme, setTheme] = useState<CardTheme>("classic");
   const [loading, setLoading] = useState(false);
   const [shareUrl, setShareUrl] = useState("");
   const [copied, setCopied] = useState(false);
@@ -19,13 +24,17 @@ const Index = () => {
     setLoading(true);
     const { data, error } = await supabase
       .from("valentine_cards")
-      .insert({ sender_name: senderName.trim(), recipient_name: recipientName.trim() })
+      .insert({
+        sender_name: senderName.trim(),
+        recipient_name: recipientName.trim(),
+        message: message.trim() || null,
+        theme,
+      })
       .select("slug")
       .single();
 
     if (data && !error) {
-      const url = `${window.location.origin}/card/${data.slug}`;
-      setShareUrl(url);
+      setShareUrl(`${window.location.origin}/card/${data.slug}`);
     }
     setLoading(false);
   };
@@ -42,56 +51,77 @@ const Index = () => {
 
       <div className="glass-card rounded-3xl p-8 md:p-10 max-w-lg w-full text-center z-10 relative">
         {/* Teddy */}
-        <div className="flex justify-center -mt-20 mb-6">
+        <div className="flex justify-center -mt-20 mb-4">
           <div className="animate-bounce-gentle">
             <img
               src={teddyImg}
               alt="Cute teddy bear"
-              className="w-28 h-28 md:w-32 md:h-32 rounded-full border-4 border-primary/20 bg-card object-cover shadow-xl"
+              className="w-28 h-28 md:w-32 md:h-32 rounded-full border-4 border-primary/20 bg-card object-cover shadow-xl animate-glow-pulse"
             />
           </div>
         </div>
 
         {!shareUrl ? (
           <>
-            <div className="flex items-center justify-center gap-2 mb-2">
+            <div className="flex items-center justify-center gap-2 mb-1">
               <Heart className="w-5 h-5 text-primary fill-primary" />
               <h1 className="text-2xl md:text-3xl font-bold text-foreground">
                 Valentine Card Maker
               </h1>
               <Heart className="w-5 h-5 text-primary fill-primary" />
             </div>
-            <p className="text-muted-foreground mb-6 text-sm">
+            <p className="text-muted-foreground mb-4 text-sm">
               Create a cute Valentine's card & share it with your special someone 💌
             </p>
 
-            <div className="space-y-4 mb-6">
+            <CountdownTimer />
+
+            <div className="space-y-4 mb-5">
+              <div className="grid grid-cols-2 gap-3">
+                <div className="text-left">
+                  <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1 block">
+                    Your Name
+                  </label>
+                  <input
+                    type="text"
+                    maxLength={50}
+                    placeholder="e.g. Sunny"
+                    value={senderName}
+                    onChange={(e) => setSenderName(e.target.value)}
+                    className="w-full px-4 py-3 rounded-xl bg-secondary/50 border border-border text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all"
+                  />
+                </div>
+                <div className="text-left">
+                  <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1 block">
+                    Their Name
+                  </label>
+                  <input
+                    type="text"
+                    maxLength={50}
+                    placeholder="e.g. Jaan"
+                    value={recipientName}
+                    onChange={(e) => setRecipientName(e.target.value)}
+                    className="w-full px-4 py-3 rounded-xl bg-secondary/50 border border-border text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all"
+                  />
+                </div>
+              </div>
+
               <div className="text-left">
                 <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1 block">
-                  Your Name
+                  Love Letter 💌 <span className="normal-case font-normal">(optional)</span>
                 </label>
-                <input
-                  type="text"
-                  maxLength={50}
-                  placeholder="e.g. Sunny"
-                  value={senderName}
-                  onChange={(e) => setSenderName(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-secondary/50 border border-border text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all"
+                <textarea
+                  maxLength={500}
+                  rows={3}
+                  placeholder="Write a sweet message for them..."
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl bg-secondary/50 border border-border text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all resize-none"
                 />
+                <p className="text-[10px] text-muted-foreground/60 text-right mt-0.5">{message.length}/500</p>
               </div>
-              <div className="text-left">
-                <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1 block">
-                  Their Name
-                </label>
-                <input
-                  type="text"
-                  maxLength={50}
-                  placeholder="e.g. Jaan"
-                  value={recipientName}
-                  onChange={(e) => setRecipientName(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl bg-secondary/50 border border-border text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/40 transition-all"
-                />
-              </div>
+
+              <ThemeSelector value={theme} onChange={setTheme} />
             </div>
 
             <button
@@ -100,7 +130,7 @@ const Index = () => {
               className="btn-primary-valentine w-full py-3.5 px-6 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? (
-                <span className="animate-pulse">Creating...</span>
+                <span className="animate-pulse">Creating magic... ✨</span>
               ) : (
                 <>
                   <Sparkles className="w-4 h-4" />
@@ -112,37 +142,30 @@ const Index = () => {
           </>
         ) : (
           <>
-            <h2 className="text-2xl font-bold text-foreground mb-2">
+            <h2 className="text-2xl font-bold text-foreground mb-2 animate-slide-up" style={{ opacity: 0 }}>
               Your card is ready! 🎉
             </h2>
-            <p className="text-muted-foreground mb-6 text-sm">
+            <p className="text-muted-foreground mb-6 text-sm animate-slide-up stagger-1" style={{ opacity: 0 }}>
               Share this link with <strong>{recipientName}</strong> and see if they say YES 💕
             </p>
 
-            <div className="bg-secondary/50 rounded-xl p-3 mb-4 break-all text-sm text-foreground/80 border border-border">
+            <div className="bg-secondary/50 rounded-xl p-3 mb-4 break-all text-sm text-foreground/80 border border-border animate-slide-up stagger-2" style={{ opacity: 0 }}>
               {shareUrl}
             </div>
 
-            <div className="flex gap-3 mb-3">
-              <button
-                onClick={handleCopy}
-                className="btn-primary-valentine flex-1 py-3 flex items-center justify-center gap-2"
-              >
+            <div className="flex gap-3 mb-3 animate-slide-up stagger-3" style={{ opacity: 0 }}>
+              <button onClick={handleCopy} className="btn-primary-valentine flex-1 py-3 flex items-center justify-center gap-2">
                 {copied ? "Copied! ✅" : "Copy Link 📋"}
               </button>
               <button
-                onClick={() => {
-                  setShareUrl("");
-                  setSenderName("");
-                  setRecipientName("");
-                }}
+                onClick={() => { setShareUrl(""); setSenderName(""); setRecipientName(""); setMessage(""); }}
                 className="btn-muted-valentine flex-1 py-3"
               >
                 Create Another 💌
               </button>
             </div>
 
-            <div className="flex gap-3 mb-3">
+            <div className="flex gap-3 mb-3 animate-slide-up stagger-4" style={{ opacity: 0 }}>
               <a
                 href={`https://wa.me/?text=${encodeURIComponent(`Hey ${recipientName}! Someone special has a Valentine's question for you 💕\n\n${shareUrl}`)}`}
                 target="_blank"
@@ -167,7 +190,8 @@ const Index = () => {
 
             <button
               onClick={() => navigate(`/card/${shareUrl.split("/card/")[1]}`)}
-              className="text-sm text-primary hover:underline transition-colors flex items-center justify-center gap-1 w-full"
+              className="text-sm text-primary hover:underline transition-colors flex items-center justify-center gap-1 w-full animate-slide-up stagger-5"
+              style={{ opacity: 0 }}
             >
               <Send className="w-3 h-3" /> Preview your card
             </button>
