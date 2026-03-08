@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import teddyImg from "@/assets/teddy.png";
 import FloatingHearts from "@/components/FloatingHearts";
 import Footer from "@/components/Footer";
+import MusicPlayer from "@/components/MusicPlayer";
 import { Heart, Loader2, Mail } from "lucide-react";
 import { fireConfetti, playSuccessSound } from "@/lib/confetti";
 import { getThemeClass } from "@/lib/themes";

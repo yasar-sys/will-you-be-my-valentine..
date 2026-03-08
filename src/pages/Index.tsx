@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import teddyImg from "@/assets/teddy.png";
 import FloatingHearts from "@/components/FloatingHearts";
 import Footer from "@/components/Footer";
+import MusicPlayer from "@/components/MusicPlayer";
 import CountdownTimer from "@/components/CountdownTimer";
 import ThemeSelector from "@/components/ThemeSelector";
 import { Heart, Sparkles, Send } from "lucide-react";
