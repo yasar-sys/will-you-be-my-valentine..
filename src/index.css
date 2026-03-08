@@ -224,3 +224,83 @@
 .stagger-3 { animation-delay: 0.3s; }
 .stagger-4 { animation-delay: 0.4s; }
 .stagger-5 { animation-delay: 0.5s; }
+
+/* ===== Envelope Animation ===== */
+.envelope-wrapper {
+  perspective: 600px;
+  width: 200px;
+  height: 150px;
+  position: relative;
+}
+
+.envelope-body {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.envelope-front {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, hsl(var(--pink-light)), hsl(var(--secondary)));
+  border-radius: 0 0 12px 12px;
+  border: 2px solid hsl(var(--border));
+  border-top: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+
+.envelope-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(180deg, hsl(var(--primary) / 0.15), hsl(var(--pink-light)));
+  border: 2px solid hsl(var(--border));
+  border-bottom: none;
+  clip-path: polygon(0 0, 50% 100%, 100% 0);
+  transform-origin: top center;
+  z-index: 4;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.envelope-flap.flap-open {
+  transform: rotateX(-180deg);
+  z-index: 1;
+}
+
+.envelope-letter {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: 20%;
+  height: 70%;
+  background: hsl(var(--card));
+  border-radius: 8px;
+  border: 1px solid hsl(var(--border));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s, opacity 0.3s ease 0.4s;
+  box-shadow: 0 4px 15px hsl(var(--primary) / 0.1);
+}
+
+.envelope-letter.letter-rising {
+  transform: translateY(-120%);
+  opacity: 0;
+}
+
+.envelope-opening {
+  animation: none;
+}
+
+@keyframes envelope-shake {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-3deg); }
+  75% { transform: rotate(3deg); }
+}
